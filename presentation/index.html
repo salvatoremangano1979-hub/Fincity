@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinCity — Presentazione | Accenture</title>
+  <style>
+    /* Accenture Brand System */
+    :root {
+      --acc-purple: #A100FF;
+      --acc-black: #000000;
+      --acc-white: #FFFFFF;
+      --acc-gray: #F2F2F2;
+      --acc-dark: #1A1A1A;
+      --acc-text: #333333;
+      --font: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--acc-black);
+      color: var(--acc-white);
+      overflow-x: hidden;
+    }
+
+    /* Slide base */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px;
+      position: relative;
+      border-bottom: 2px solid #1A1A1A;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.95);
+      border-bottom: 2px solid var(--acc-purple);
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--acc-white);
+    }
+
+    .nav-logo span { color: var(--acc-purple); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      color: #999;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--acc-purple); }
+
+    /* Slide 1: Cover */
+    #slide-1 {
+      background: var(--acc-black);
+      padding-top: 120px;
+    }
+
+    .cover-tag {
+      color: var(--acc-purple);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .cover-title {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+
+    .cover-title .highlight { color: var(--acc-purple); }
+
+    .cover-sub {
+      font-size: 20px;
+      color: #999;
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .pill-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .pill {
+      padding: 8px 20px;
+      border: 1px solid;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .pill-purple { border-color: var(--acc-purple); color: var(--acc-purple); }
+    .pill-white { border-color: #555; color: #999; }
+
+    .cover-accent-line {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 60%;
+      background: var(--acc-purple);
+    }
+
+    /* Slide 2: Problem */
+    #slide-2 { background: #0A0A0A; }
+
+    .slide-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--acc-purple);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .slide-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .slide-sub {
+      font-size: 18px;
+      color: #999;
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 900px;
+    }
+
+    .stat-box {
+      background: #111;
+      border: 1px solid #222;
+      border-top: 3px solid var(--acc-purple);
+      padding: 28px 24px;
+    }
+
+    .stat-big {
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--acc-purple);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-desc {
+      font-size: 14px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* Slide 3: Solution */
+    #slide-3 { background: var(--acc-black); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1100px;
+    }
+
+    .feature-list { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+
+    .feature-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(161, 0, 255, 0.15);
+      border: 1px solid rgba(161, 0, 255, 0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .feature-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .feature-text p { font-size: 13px; color: #999; line-height: 1.5; }
+
+    .game-preview {
+      background: #0D1117;
+      border: 1px solid #1E2D45;
+      border-radius: 16px;
+      padding: 24px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #00D4A3;
+    }
+
+    .game-preview .preview-header {
+      color: #94A3B8;
+      font-size: 11px;
+      margin-bottom: 16px;
+      font-family: var(--font);
+    }
+
+    .city-row { display: flex; gap: 12px; margin-bottom: 12px; font-size: 28px; }
+
+    .finance-bars { margin-top: 16px; }
+    .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; color: #94A3B8; font-family: var(--font); }
+    .bar-fill { height: 6px; border-radius: 3px; }
+    .bar-wrap { flex: 1; background: #1E2D45; border-radius: 3px; overflow: hidden; }
+
+    /* Slide 4: Agentic Architecture */
+    #slide-4 { background: #050508; }
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin-top: 40px;
+    }
+
+    .arch-card {
+      background: #0D0D15;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arch-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--acc-purple);
+    }
+
+    .arch-card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acc-purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .arch-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .arch-card p { font-size: 13px; color: #999; line-height: 1.5; }
+
+    .workflow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .wf-node {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .wf-arrow { color: var(--acc-purple); font-size: 18px; }
+
+    /* Slide 5: Impact */
+    #slide-5 { background: #0A0A0A; }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      margin-top: 40px;
+    }
+
+    .impact-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .impact-emoji { font-size: 32px; margin-bottom: 12px; }
+    .impact-number { font-size: 36px; font-weight: 800; color: var(--acc-purple); margin-bottom: 4px; }
+    .impact-label { font-size: 12px; color: #999; }
+
+    /* Slide 6: Team */
+    #slide-6 { background: var(--acc-black); }
+
+    .team-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .team-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px 28px;
+      min-width: 200px;
+    }
+
+    .team-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .team-card p { font-size: 13px; color: #999; }
+
+    .accenture-footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .acc-logo-text {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .acc-logo-text span { color: var(--acc-purple); }
+
+    .footer-note { font-size: 12px; color: #555; }
+
+    /* Accenture > arrow decoration */
+    .acc-chevron {
+      color: var(--acc-purple);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Tech stack */
+    .tech-stack {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .tech-tag {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .tech-tag.highlight-tag {
+      border-color: var(--acc-purple);
+      color: var(--acc-purple);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">Fin<span>City</span> &nbsp;›&nbsp; Accenture AI Hackathon</div>
+  <div class="nav-links">
+    <a href="#slide-1">Intro</a>
+    <a href="#slide-2">Problema</a>
+    <a href="#slide-3">Soluzione</a>
+    <a href="#slide-4">Architettura</a>
+    <a href="#slide-5">Impatto</a>
+    <a href="#slide-6">Team</a>
+  </div>
+</nav>
+
+<!-- Slide 1: Cover -->
+<section class="slide" id="slide-1">
+  <div class="cover-tag">Accenture AI Hackathon 2026 &nbsp;·&nbsp; Educazione Finanziaria</div>
+  <h1 class="cover-title">
+    Costruisci il tuo<br>
+    <span class="highlight">futuro finanziario</span><br>
+    un mese alla volta.
+  </h1>
+  <p class="cover-sub">
+    FinCity è un city builder educativo che usa l'agentic coding con Claude Code per insegnare finanza personale a chi non l'ha mai studiata.
+  </p>
+  <div class="pill-row">
+    <div class="pill pill-purple">🎮 City Builder</div>
+    <div class="pill pill-purple">🤖 Claude AI Coach</div>
+    <div class="pill pill-white">🏦 Finanza Personale</div>
+    <div class="pill pill-white">📊 Agentic Coding</div>
+  </div>
+  <div class="cover-accent-line"></div>
+</section>
+
+<!-- Slide 2: Problem -->
+<section class="slide" id="slide-2">
+  <div class="slide-label">Il Problema</div>
+  <h2 class="slide-title">L'alfabetizzazione finanziaria<br>in Italia è <span style="color:var(--acc-purple)">tra le più basse</span><br>d'Europa.</h2>
+  <p class="slide-sub">
+    Milioni di persone non sanno gestire un budget mensile, costruire un fondo emergenza o investire i propri risparmi. Corsi e libri non bastano — serve un approccio esperienziale.
+  </p>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-big">37°</div>
+      <div class="stat-desc">Posizione dell'Italia su 39 Paesi OCSE per alfabetizzazione finanziaria adulta (2023)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-big">58%</div>
+      <div class="stat-desc">Italiani che non hanno un fondo emergenza adeguato (equivalente a 3 mesi di spese)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-big">76%</div>
+      <div class="stat-desc">Chi non ha mai investito i propri risparmi in strumenti a lungo termine come ETF o fondi</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Solution -->
+<section class="slide" id="slide-3">
+  <div class="slide-label">La Soluzione</div>
+  <div class="two-col">
+    <div>
+      <h2 class="slide-title">Imparare<br>giocando.</h2>
+      <p class="slide-sub">
+        FinCity trasforma la gestione delle finanze in un gioco. Ogni decisione ha conseguenze reali simulate. Il coach AI spiega cosa sta succedendo e perché.
+      </p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">🏙️</div>
+          <div class="feature-text">
+            <h4>City Builder Finanziario</h4>
+            <p>Costruisci la tua città—ogni edificio rappresenta una scelta finanziaria reale: risparmio, investimento, protezione.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤖</div>
+          <div class="feature-text">
+            <h4>Coach AI Personalizzato</h4>
+            <p>Claude analizza ogni decisione e fornisce spiegazioni contestuali, semplici, non giudicanti.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">
+            <h4>Scenari Realistici</h4>
+            <p>Imprevisti, bonus, mercati in calo: gli stessi eventi che accadono nella vita reale, in un ambiente sicuro dove sbagliare non costa nulla.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="game-preview">
+        <div class="preview-header">🏙️ FinCity — Gen 2025 | Score: 72/100</div>
+        <div class="city-row">🏠 💼 🏦 🛡️</div>
+        <div class="city-row">📈 🎓 🌳 ➕</div>
+
+        <div class="finance-bars" style="margin-top:20px">
+          <div class="bar-row">
+            <span style="width:100px">💰 Risparmi</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width:65%;background:#00D4A3"></div></div>
+            <span>€3.250</span>
+          </div>
+          <div class="bar-row">
+            <span style="width:100px">🛡️ Fondo Em.</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width:80%;background:#7B61FF"></div></div>
+            <span>€2.400</span>
+          </div>
+          <div class="bar-row">
+            <span style="width:100px">📈 Investim.</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width:40%;background:#F59E0B"></div></div>
+            <span>€5.100</span>
+          </div>
+          <div class="bar-row">
+            <span style="width:100px">💳 Debito</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width:0%;background:#EF4444"></div></div>
+            <span>€0</span>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;padding:12px;background:rgba(123,97,255,0.1);border:1px solid rgba(123,97,255,0.3);border-radius:8px;font-family:var(--font);font-size:12px;color:#ccc">
+          🤖 <em>Hai fatto il tuo primo investimento! Il tempo è il tuo alleato: l'interesse composto farà crescere €5.100 a ~€10.000 in 10 anni a parità di condizioni.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Agentic Architecture -->
+<section class="slide" id="slide-4">
+  <div class="slide-label">Struttura Agentica</div>
+  <h2 class="slide-title">Sviluppato con<br><span style="color:var(--acc-purple)">Agentic Coding</span><br>e Claude Code.</h2>
+
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-tag">Skill 1</div>
+      <h3>🎯 Financial Scenario Generator</h3>
+      <p>Genera eventi finanziari realistici (emergenze, opportunità, variazioni di mercato) con impatti calcolati e messaggi educativi incorporati.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-tag">Skill 2</div>
+      <h3>🤖 Financial Coach</h3>
+      <p>Produce feedback educativo personalizzato in base allo stato del giocatore. Tono accessibile, non giudicante. Integra con Claude API o funziona offline in modalità mock.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-tag">Skill 3</div>
+      <h3>📊 Evaluate Player Decision</h3>
+      <p>Analizza ogni scelta del giocatore: calcola impatto immediato, proiezione a 12 mesi e a 5 anni. Genera uno score 0–100 della salute finanziaria.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-tag">Skill 4</div>
+      <h3>✍️ Game Content Creator</h3>
+      <p>Genera tutti i testi del gioco — tutorial, milestone, tooltip, dizionario finanziario — seguendo linee guida di accessibilità linguistica.</p>
+    </div>
+  </div>
+
+  <div class="workflow-diagram">
+    <span class="wf-node">Turno mensile</span>
+    <span class="wf-arrow">›</span>
+    <span class="wf-node" style="border-color:var(--acc-purple);color:var(--acc-purple)">Scenario Generator</span>
+    <span class="wf-arrow">›</span>
+    <span class="wf-node">Decisione player</span>
+    <span class="wf-arrow">›</span>
+    <span class="wf-node" style="border-color:var(--acc-purple);color:var(--acc-purple)">Evaluate Decision</span>
+    <span class="wf-arrow">›</span>
+    <span class="wf-node" style="border-color:var(--acc-purple);color:var(--acc-purple)">Financial Coach</span>
+    <span class="wf-arrow">›</span>
+    <span class="wf-node">Turno successivo</span>
+  </div>
+
+  <div class="tech-stack" style="margin-top:32px">
+    <div class="tech-tag highlight-tag">Claude Code</div>
+    <div class="tech-tag highlight-tag">Claude API (Opus)</div>
+    <div class="tech-tag">JavaScript Vanilla</div>
+    <div class="tech-tag">HTML5 Canvas</div>
+    <div class="tech-tag">Zero dipendenze</div>
+    <div class="tech-tag">Open source</div>
+  </div>
+</section>
+
+<!-- Slide 5: Impact -->
+<section class="slide" id="slide-5">
+  <div class="slide-label">Impatto e Scalabilità</div>
+  <h2 class="slide-title">Un gioco.<br>Un cambiamento<br><span style="color:var(--acc-purple)">reale.</span></h2>
+  <p class="slide-sub">
+    FinCity non è solo un prototipo—è un modello scalabile per l'educazione finanziaria di massa.
+  </p>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-emoji">🎮</div>
+      <div class="impact-number">120</div>
+      <div class="impact-label">Turni di gioco (mesi simulati in 10 anni di vita finanziaria)</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-emoji">🧠</div>
+      <div class="impact-number">7+</div>
+      <div class="impact-label">Concetti finanziari insegnati attraverso situazioni concrete</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-emoji">⚡</div>
+      <div class="impact-number">0</div>
+      <div class="impact-label">Dipendenze esterne. Funziona offline con un clic su index.html</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-emoji">🔌</div>
+      <div class="impact-number">1</div>
+      <div class="impact-label">Funzione da modificare per attivare il coach Claude reale</div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;max-width:700px">
+    <h3 style="font-size:18px;margin-bottom:16px">Possibili evoluzioni</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="padding:14px;background:#111;border:1px solid #222;border-radius:8px;font-size:13px;color:#999">
+        📱 <strong style="color:#fff">Mobile app</strong> — con notifiche mensili per creare abitudine
+      </div>
+      <div style="padding:14px;background:#111;border:1px solid #222;border-radius:8px;font-size:13px;color:#999">
+        🏦 <strong style="color:#fff">Integrazione bancaria</strong> — dati reali per feedback personalizzato
+      </div>
+      <div style="padding:14px;background:#111;border:1px solid #222;border-radius:8px;font-size:13px;color:#999">
+        🎓 <strong style="color:#fff">Versione school</strong> — curriculum per scuole superiori
+      </div>
+      <div style="padding:14px;background:#111;border:1px solid #222;border-radius:8px;font-size:13px;color:#999">
+        🌍 <strong style="color:#fff">Multilingua</strong> — accessibile a comunità immigrate
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: Team + Closing -->
+<section class="slide" id="slide-6">
+  <div class="slide-label">Il Team</div>
+  <h2 class="slide-title">Costruito con<br><span style="color:var(--acc-purple)">Claude Code</span><br>e passione.</h2>
+
+  <div class="team-row">
+    <div class="team-card">
+      <h4>Salvatore Mangano</h4>
+      <p>Lead Developer &amp; AI Architect</p>
+    </div>
+    <!-- Aggiungi altri membri del team qui -->
+  </div>
+
+  <div style="margin-top:48px;padding:28px;background:#111;border:1px solid #222;border-radius:12px;max-width:700px">
+    <div style="font-size:14px;color:#999;line-height:1.7">
+      <strong style="color:#fff">Approccio Agentic:</strong> Questo progetto dimostra come Claude Code con skill definitions permetta di sviluppare sistemi educativi complessi in modo rapido e iterativo. Le skill <code style="color:var(--acc-purple)">financial-coach</code>, <code style="color:var(--acc-purple)">financial-scenario-generator</code>, <code style="color:var(--acc-purple)">evaluate-player-decision</code> e <code style="color:var(--acc-purple)">game-content-creator</code> definiscono comportamenti riutilizzabili che possono evolvere indipendentemente dal codice del gioco.
+    </div>
+  </div>
+
+  <div class="accenture-footer">
+    <div class="acc-logo-text">Accenture<span>›</span></div>
+    <div>
+      <div style="font-size:13px;color:#999">AI Hackathon 2026 — Educazione Finanziaria</div>
+      <div style="font-size:12px;color:#555;margin-top:4px">github.com/[team-repo]/fincity</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

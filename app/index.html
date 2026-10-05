@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinCity — Costruisci il tuo futuro finanziario</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo">
+    <span>🏙️</span>
+    <div>
+      <div>FinCity</div>
+      <div class="tagline">Educazione Finanziaria Interattiva</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="score-container">
+      <div class="score-ring" id="score-ring" style="--score:0">
+        <span class="score-number" id="stat-score">0</span>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text2)">Score</div>
+        <div style="font-size:11px;font-weight:600">Finanziario</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main layout -->
+<main class="main">
+
+  <!-- LEFT: Stats -->
+  <aside class="panel">
+    <div class="panel-title">📊 Situazione Finanziaria</div>
+
+    <div class="month-card" style="margin-bottom:12px">
+      <div>
+        <div class="month-sub">Periodo</div>
+        <div class="month-value" id="stat-month">—</div>
+      </div>
+      <div style="text-align:right">
+        <div class="month-sub">Liquidità</div>
+        <div class="month-value positive" id="stat-cash">—</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">💰 Risparmi</div>
+        <div class="stat-value positive" id="stat-savings">€0</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-label">🛡️ Fondo Emerg.</div>
+        <div class="stat-value positive" id="stat-emergency">€0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">📈 Investimenti</div>
+        <div class="stat-value positive" id="stat-investments">€0</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-label">💳 Debiti</div>
+        <div class="stat-value negative" id="stat-debt">€0</div>
+      </div>
+    </div>
+
+    <hr class="stat-divider">
+
+    <div class="flow-row">
+      <span class="label">📥 Entrate mensili</span>
+      <strong class="positive" id="stat-income">—</strong>
+    </div>
+    <div class="flow-row">
+      <span class="label">📤 Uscite totali</span>
+      <strong style="color:var(--warn)" id="stat-expenses">—</strong>
+    </div>
+
+    <hr class="stat-divider">
+
+    <div class="stat-card" style="margin-bottom:12px">
+      <div class="stat-label">🏆 Patrimonio Netto</div>
+      <div class="stat-value" id="stat-networth" style="font-size:20px">€0</div>
+    </div>
+
+    <div class="progress-container">
+      <div style="display:flex;justify-content:space-between;font-size:11px">
+        <span>🛡️ Fondo Emergenza</span>
+        <span style="color:var(--text2)">obiettivo: €3.000</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="emergency-progress" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="emergency-label">0% dell'obiettivo</div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container" style="margin-top:16px">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px">📈 Patrimonio nel tempo</div>
+      <canvas id="chart-canvas"></canvas>
+    </div>
+  </aside>
+
+  <!-- CENTER: City + Controls -->
+  <div class="center-panel">
+    <div class="panel">
+      <div class="panel-title">🏙️ La tua FinCity</div>
+      <div class="city-grid" id="city-grid"></div>
+    </div>
+
+    <div class="panel coach-card">
+      <div class="coach-header">
+        <span>🤖</span> Coach AI — Powered by Claude
+      </div>
+      <div id="coach-message">Caricamento...</div>
+    </div>
+
+    <button class="btn-primary" id="next-month-btn">
+      ⏭️ Avanza al mese successivo
+    </button>
+
+    <div class="panel" style="font-size:12px;color:var(--text2);text-align:center;padding:10px">
+      🎯 Obiettivo: costruisci la tua libertà finanziaria in 10 anni (120 mesi)
+    </div>
+  </div>
+
+  <!-- RIGHT: Shop -->
+  <aside class="panel">
+    <div class="panel-title">🏗️ Aggiungi alla tua città</div>
+    <div class="shop-list" id="shop-list"></div>
+
+    <hr class="stat-divider" style="margin:16px 0">
+
+    <div class="panel-title">📚 Dizionario Finanziario</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <button class="choice-btn" onclick="showConcept('emergency_fund')">🛡️ Fondo Emergenza</button>
+      <button class="choice-btn" onclick="showConcept('compound_interest')">📈 Interesse Composto</button>
+      <button class="choice-btn" onclick="showConcept('etf')">📊 Cos'è un ETF?</button>
+      <button class="choice-btn" onclick="showConcept('budget')">📋 Budget Mensile</button>
+      <button class="choice-btn" onclick="showConcept('inflation')">💸 Inflazione</button>
+    </div>
+  </aside>
+
+</main>
+
+<!-- Event Modal -->
+<div class="modal-overlay hidden" id="event-modal">
+  <div class="modal">
+    <div class="modal-title" id="event-title"></div>
+    <div class="modal-desc" id="event-description"></div>
+    <div class="modal-choices" id="event-choices"></div>
+  </div>
+</div>
+
+<!-- Victory Screen -->
+<div class="victory-overlay hidden" id="victory-overlay">
+  <div class="victory-card">
+    <div class="victory-emoji">🏆</div>
+    <div class="victory-title">Libertà Finanziaria!</div>
+    <div class="victory-sub">Hai completato 10 anni di FinCity. Ecco i tuoi risultati:</div>
+    <div class="victory-stat" id="victory-networth"></div>
+    <div style="color:var(--text2);font-size:13px">Patrimonio Netto Finale</div>
+    <div class="victory-stat" style="margin-top:12px" id="victory-score"></div>
+    <div style="color:var(--text2);font-size:13px">Score Finanziario / 100</div>
+    <p style="margin-top:20px;font-size:13px;color:var(--text2)">
+      Queste abitudini, applicate nella vita reale, possono davvero fare la differenza.
+      Inizia con un piccolo passo oggi! 💪
+    </p>
+    <button class="btn-primary" style="margin-top:20px" onclick="location.reload()">🔄 Gioca di nuovo</button>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="notification"></div>
+
+<script src="js/scenarios.js"></script>
+<script src="js/coach.js"></script>
+<script src="js/game.js"></script>
+<script>
+  function showConcept(concept) {
+    coach.getMessage('concept', { concept }).then(msg => showCoachMessage(msg));
+  }
+</script>
+
+</body>
+</html>
